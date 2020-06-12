@@ -36,7 +36,6 @@ RUN echo "Installing Packages" && \
 RUN echo "Installed packages: " >> ${BUILD_INFO} && \
   make --version | head -n 1 >> ${BUILD_INFO} && \
   git --version >> ${BUILD_INFO} && \
-  mercurial --version >> ${BUILD_INFO} && \
   which wget >> ${BUILD_INFO} && \
   curl --version | head -n 1 >> ${BUILD_INFO} && \
   which zip >> ${BUILD_INFO} && \

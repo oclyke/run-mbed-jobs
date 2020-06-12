@@ -21,29 +21,26 @@ RUN echo "Installing Packages" && \
   apt-get update -y && \
   apt-get install -y --no-install-recommends \
   build-essential \
+  jq \
   git \
+  mercurial \
   zip \
   wget \
   curl \
   unzip \
-  python-pip \
-  python-setuptools \
-  python-dev \
   python3-pip \
   python3-setuptools \
-  mercurial \
   && rm -rf /var/lib/apt/lists/* && \
   echo "" >> ${BUILD_INFO}
 
 RUN echo "Installed packages: " >> ${BUILD_INFO} && \
   make --version | head -n 1 >> ${BUILD_INFO} && \
   git --version >> ${BUILD_INFO} && \
+  mercurial --version >> ${BUILD_INFO} && \
   which wget >> ${BUILD_INFO} && \
   curl --version | head -n 1 >> ${BUILD_INFO} && \
   which zip >> ${BUILD_INFO} && \
   which unzip >> ${BUILD_INFO} && \
-  python --version >> ${BUILD_INFO} && \
-  pip --version >> ${BUILD_INFO} && \
   python3 --version >> ${BUILD_INFO} && \
   pip3 --version >> ${BUILD_INFO} && \
   echo "" >> ${BUILD_INFO}
@@ -59,7 +56,7 @@ ENV PATH="${ARMGCC_PATH}:${PATH}"
 
 # Install mbed-cli
 RUN echo "Installing mbed-cli" && \
-  pip install mbed-cli && \
+  pip3 install mbed-cli && \
   echo "mbed-cli $(mbed --version)" >> ${BUILD_INFO}
 
 ENV MBED_GCC_ARM_PATH="${ARMGCC_PATH}"

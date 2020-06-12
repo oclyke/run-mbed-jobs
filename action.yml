@@ -1,0 +1,22 @@
+# action.yml
+name: compile mbed projects
+author: oclyke-actions
+description: compile mbed projects
+inputs:
+  jobs:
+    description: serialized json object with entries {\'job-name\':\ {\'options\':\ ''} [, ...]}
+    required: true
+    default: '{}'
+  mbed-os-repo-url:
+    description: the url for the git repo containing the mbed version to use
+    required: false
+    default: https://github.com/ARMmbed/mbed-os
+outputs:
+  jobs:
+    description: serialized json object with reults of jobs
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.mbed-os-url }}
+    - ${{ inputs.jobs }}

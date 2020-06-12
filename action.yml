@@ -10,7 +10,7 @@ inputs:
   mbed-os-repo-url:
     description: the url for the git repo containing the mbed version to use
     required: false
-    default: https://github.com/ARMmbed/mbed-os
+    default: 'https://github.com/ARMmbed/mbed-os'
 outputs:
   jobs:
     description: serialized json object with reults of jobs

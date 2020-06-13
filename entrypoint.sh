@@ -1,7 +1,12 @@
 #!/bin/sh -l
 
-echo "mbed-os-url: $1"
-echo "jobs: $2"
+MBED = $1
+JOBS = $2
+
+echo "mbed: ${MBED}"
+echo "jobs: ${JOBS}"
+
+echo $JOBS | jq -c '.'
 
 for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
     _jq() {

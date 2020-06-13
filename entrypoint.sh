@@ -15,3 +15,7 @@ for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
 
    echo $(_jq '.name')
 done
+
+touch ./test-output.txt
+echo "this is a test file representing the output" >> ./test-output.txt
+echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"} time::$time"

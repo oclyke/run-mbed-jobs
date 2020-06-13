@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
-MBED = $1
-JOBS = $2
+MBED=$1
+JOBS=$2
 
 echo "mbed: ${MBED}"
 echo "jobs: ${JOBS}"

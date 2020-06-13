@@ -6,7 +6,7 @@ jobs=$2
 echo "mbed: ${mbed}"
 echo "jobs: ${jobs}"
 
-echo "${jobs}" | jq -r '.[] | @base64'
+echo "${jobs}" | jq -r '.[]'
 
 for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
     _jq() {

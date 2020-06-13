@@ -1,12 +1,12 @@
 #!/bin/sh -l
 
-MBED=$1
-JOBS=$2
+mbed=$1
+jobs=$2
 
-echo "mbed: ${MBED}"
-echo "jobs: ${JOBS}"
+echo "mbed: ${mbed}"
+echo "jobs: ${jobs}"
 
-echo $JOBS | jq -c '.'
+echo "${jobs}" | jq -r '.[] | @base64'
 
 for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
     _jq() {

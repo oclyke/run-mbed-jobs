@@ -12,8 +12,8 @@ jobs=$2
 
 # echo "${jobs}" | jq -r '.[]'
 
-mbed_url=$(echo ${mbed} | jq '.url')
-mbed_branch=$(echo ${mbed} | jq '.branch')
+mbed_url=$(echo ${mbed} | jq -r '.url')
+mbed_branch=$(echo ${mbed} | jq -r '.branch')
 mbed_dir="tmp/mbed-os"
 echo "cloning mbed from repo: ${mbed_url} into ${mbed_dir}"
 mkdir -p ${mbed_dir}

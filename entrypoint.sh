@@ -4,16 +4,16 @@ _jq() {
     echo ${1} | jq -r '.[] ${2}'
 }
 
-mbed=$1
+mbed_opts='${1}'
 jobs=$2
 
-# echo "mbed: ${mbed}"
-# echo "jobs: ${jobs}"
+echo "mbed: ${mbed_opts}"
+echo "jobs: ${jobs}"
 
 # echo "${jobs}" | jq -r '.[]'
 
-mbed_url=$(echo '${mbed}' | jq -r '.url')
-mbed_branch=$(echo '${mbed}' | jq -r '.branch')
+mbed_url=$(echo ${mbed_opts} | jq -r '.url')
+mbed_branch=$(echo ${mbed_opts} | jq -r '.branch')
 mbed_dir="tmp/mbed-os"
 echo "cloning mbed from repo: '${mbed_url}' into '${mbed_dir}'"
 mkdir -p ${mbed_dir}

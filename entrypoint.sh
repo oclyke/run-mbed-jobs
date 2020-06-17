@@ -26,6 +26,8 @@ cd ${GITHUB_WORKSPACE}
 
 for row in $(echo ${jobs} | jq -r '.[]'); do
 
+    echo ${row}
+
     name=$(echo ${row} '.name')
     loc=$(echo ${row} '.loc')
     cmd=$(echo ${row} '.cmd')

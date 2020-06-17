@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
 _jq() {
-    echo ${1} | base64 --decode | jq -r ${2}
+    echo ${1} | jq -r '.[] ${2}'
 }
 
 mbed=$1

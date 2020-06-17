@@ -24,7 +24,9 @@ for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
     rm -rf loc
     mkdir -p loc
     ls loc
-    
+
+    git clone mbed "${loc}/mbed-os"
+
 done
 
 touch ./test-output.txt

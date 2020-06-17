@@ -21,6 +21,7 @@ git clone ${mbed_url} ${mbed_dir}
 cd ${mbed_dir}
 echo "checking out branch: ${mbed_branch}"
 git checkout ${mbed_branch}
+pip3 install -r requirements.txt
 cd ${GITHUB_WORKSPACE}
 
 for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do

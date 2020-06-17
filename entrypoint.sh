@@ -8,7 +8,7 @@ mbed_opts=$1
 jobs=$2
 
 echo "mbed_opts: '${mbed_opts}'"
-echo "jobs: ${jobs}"
+echo "jobs: '${jobs}'"
 
 # echo "${jobs}" | jq -r '.[]'
 
@@ -24,15 +24,15 @@ git checkout ${mbed_branch}
 pip3 install -r requirements.txt
 cd ${GITHUB_WORKSPACE}
 
-for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
+for row in $(echo ${jobs} | jq -r '.[]'); do
 
-    name=$(_jq ${row} '.name')
-    loc=$(_jq ${row} '.loc')
-    cmd=$(_jq ${row} '.cmd')
+    name=$(echo ${row} '.name')
+    loc=$(echo ${row} '.loc')
+    cmd=$(echo ${row} '.cmd')
 
-    echo "name: ${name}"
-    echo "location for job: ${loc}"
-    echo "cmd: ${cmd}"
+    echo "name: '${name}'"
+    echo "location for job: '${loc}'"
+    echo "cmd: '${cmd}'"
 
     rm -rf ${loc}
     mkdir -p ${loc}

@@ -28,6 +28,9 @@ RUN echo "Installing Packages" && \
   wget \
   curl \
   unzip \
+  python-pip \
+  python-setuptools \
+  python-dev \
   python3-pip \
   python3-setuptools \
   && rm -rf /var/lib/apt/lists/* && \
@@ -40,6 +43,8 @@ RUN echo "Installed packages: " >> ${BUILD_INFO} && \
   curl --version | head -n 1 >> ${BUILD_INFO} && \
   which zip >> ${BUILD_INFO} && \
   which unzip >> ${BUILD_INFO} && \
+  python --version >> ${BUILD_INFO} && \
+  pip --version >> ${BUILD_INFO} && \
   python3 --version >> ${BUILD_INFO} && \
   pip3 --version >> ${BUILD_INFO} && \
   echo "" >> ${BUILD_INFO}

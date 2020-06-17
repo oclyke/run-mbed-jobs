@@ -15,9 +15,11 @@ jobs=$2
 mbed_url=$(_jq '.url')
 mbed_branch=$(_jq '.branch')
 mbed_dir="tmp/mbed-os"
+echo "cloning mbed from repo: ${mbed_url} into ${mbed_dir}"
 mkdir -p ${mbed_dir}
 git clone ${mbed_url} ${mbed_dir}
 cd ${mbed_dir}
+echo "checking out branch: ${mbed_branch}"
 git checkout ${mbed_branch}
 cd ${GITHUB_WORKSPACE}
 

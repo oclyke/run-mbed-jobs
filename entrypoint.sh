@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
 _jq() {
-    echo "${1}" | base64 --decode | jq -r ${2}
+    echo ${1} | base64 --decode | jq -r ${2}
 }
 
 mbed=$1
@@ -12,8 +12,8 @@ jobs=$2
 
 # echo "${jobs}" | jq -r '.[]'
 
-mbed_url=$(_jq ${mbed} '.url')
-mbed_branch=$(_jq ${mbed} '.branch')
+mbed_url=$(_jq "${mbed}" '.url')
+mbed_branch=$(_jq "${mbed}" '.branch')
 mbed_dir="tmp/mbed-os"
 echo "cloning mbed from repo: ${mbed_url} into ${mbed_dir}"
 mkdir -p ${mbed_dir}
@@ -25,13 +25,10 @@ pip3 install -r requirements.txt
 cd ${GITHUB_WORKSPACE}
 
 for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
-    _jq() {
-        echo ${row} | base64 --decode | jq -r ${1}
-    }
 
     name=$(_jq ${row} '.name')
-    loc=$(_jq '.loc')
-    cmd=$(_jq '.cmd')
+    loc=$(_jq ${row} '.loc')
+    cmd=$(_jq ${row} '.cmd')
 
     echo "name: ${name}"
     echo "location for job: ${loc}"

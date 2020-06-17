@@ -4,10 +4,10 @@ _jq() {
     echo ${1} | jq -r '.[] ${2}'
 }
 
-mbed_opts='$1'
+mbed_opts=$1
 jobs=$2
 
-echo "mbed: ${mbed_opts}"
+echo "mbed_opts: '${mbed_opts}'"
 echo "jobs: ${jobs}"
 
 # echo "${jobs}" | jq -r '.[]'

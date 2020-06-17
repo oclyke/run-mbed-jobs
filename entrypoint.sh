@@ -8,6 +8,10 @@ jobs=$2
 
 # echo "${jobs}" | jq -r '.[]'
 
+mbed_dir="tmp/mbed-os"
+mkdir -p ${mbed_dir}
+git clone ${mbed} ${mbed_dir}
+
 for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
     _jq() {
      echo ${row} | base64 --decode | jq -r ${1}
@@ -25,7 +29,7 @@ for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
     mkdir -p loc
     ls loc
 
-    git clone mbed "${loc}/mbed-os"
+    ln -s ${mbed_dir} " ${loc}/mbed-os"
 
 done
 

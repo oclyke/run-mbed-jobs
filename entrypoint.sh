@@ -1,5 +1,9 @@
 #!/bin/sh -l
 
+_jq() {
+    echo ${1} | base64 --decode | jq -r ${2}
+}
+
 mbed=$1
 jobs=$2
 
@@ -8,8 +12,8 @@ jobs=$2
 
 # echo "${jobs}" | jq -r '.[]'
 
-mbed_url=${mbed} | jq '.url'
-mbed_branch=${mbed} | jq '.branch'
+mbed_url=$(_jq ${mbed} '.url')
+mbed_branch=$(_jq ${mbed} '.branch')
 mbed_dir="tmp/mbed-os"
 echo "cloning mbed from repo: ${mbed_url} into ${mbed_dir}"
 mkdir -p ${mbed_dir}
@@ -24,7 +28,7 @@ for row in $(echo "${jobs}" | jq -r '.[] | @base64'); do
         echo ${row} | base64 --decode | jq -r ${1}
     }
 
-    name=$(_jq '.name')
+    name=$(_jq ${row} '.name')
     loc=$(_jq '.loc')
     cmd=$(_jq '.cmd')
 

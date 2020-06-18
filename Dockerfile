@@ -29,6 +29,7 @@ RUN echo "Installing Packages" && \
   curl \
   unzip \
   python-pip \
+  python-dev \
   python-setuptools \
   python-dev \
   python3-pip \

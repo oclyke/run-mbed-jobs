@@ -43,7 +43,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "cmd: '${cmd}'"
 
     job_loc=${GITHUB_WORKSPACE}/${loc}
-    echo "making symbolic link from '${mbed_dir}' to '${job_loc}/mbed-os'"
+    echo "making symbolic link from '${mbed_dir}' to '${job_loc}'"
     rm -rf ${job_loc}
     mkdir -p ${job_loc}
     

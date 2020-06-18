@@ -47,8 +47,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     rm -rf ${job_loc}
     mkdir -p ${job_loc}
     
-    ln -s ${mbed_dir} ${job_loc}
-    # cp -r ${mbed_dir} ${job_loc}
+    # ln -s ${mbed_dir} ${job_loc}
+    cp -r ${mbed_dir} ${job_loc}
 
     cd ${job_loc}
     mbed config root .

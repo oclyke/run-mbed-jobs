@@ -38,10 +38,12 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "location for job: '${loc}'"
     echo "cmd: '${cmd}'"
 
-    rm -rf ${loc}
-    mkdir -p ${loc}
-    ln -s ${mbed_dir} "${loc}/mbed-os"
-    cd ${loc}
+    echo "making symbolic link from '${mbed_dir}' to '${GITHUB_WORKSPACE}/${loc}/mbed-os'"
+    rm -rf ${GITHUB_WORKSPACE}/${loc}
+    mkdir -p ${GITHUB_WORKSPACE}/${loc}
+    ln -s ${mbed_dir} ${GITHUB_WORKSPACE}/${loc}/mbed-os
+    cd ${GITHUB_WORKSPACE}/${loc}
+    ls
 
     mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 

@@ -50,11 +50,11 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${job_loc}
     ls
 
-    mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
+    mbed ${cmd} || true # could use this to skip errors on build and continue to build other jobs
 
     cd ${GITHUB_WORKSPACE}
 
-    jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
+    # jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
 
 done
 
@@ -62,4 +62,5 @@ done
 # echo "this is a test file representing the output" >> ./test-output.txt
 # echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
 
+jobs_out+='incomplete]'
 echo "::set-output name=jobs::${jobs_out}"

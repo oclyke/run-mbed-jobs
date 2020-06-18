@@ -14,7 +14,7 @@ echo "jobs: '${jobs}'"
 
 mbed_url=$(echo ${mbed_opts} | jq -r '.url')
 mbed_branch=$(echo ${mbed_opts} | jq -r '.branch')
-mbed_dir="tmp/mbed-os"
+mbed_dir=${GITHUB_WORKSPACE}/tmp/mbed-os
 echo "cloning mbed from repo: '${mbed_url}' into '${mbed_dir}'"
 mkdir -p ${mbed_dir}
 git clone ${mbed_url} ${mbed_dir}
@@ -47,10 +47,13 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     rm -rf ${job_loc}
     mkdir -p ${job_loc}
     
-    # ln -s ${mbed_dir} ${job_loc}
-    cp -r ${mbed_dir} ${job_loc}
+    # # ln -s ${mbed_dir} ${job_loc}
+    # cp -r ${mbed_dir} ${job_loc}
 
     cd ${job_loc}
+    
+    ln -s ${mbed_dir}
+
     mbed config root .
     ls
     ls mbed-os

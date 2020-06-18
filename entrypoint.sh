@@ -28,9 +28,9 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     echo ${row}
 
-    name=$(echo ${row} | base64 --decode | jq '.name')
-    loc=$(echo ${row} | base64 --decode | jq '.loc')
-    cmd=$(echo ${row} | base64 --decode | jq '.cmd')
+    name=$(echo ${row} | base64 --decode | jq -r '.name')
+    loc=$(echo ${row} | base64 --decode | jq -r '.loc')
+    cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
 
     echo "name: '${name}'"
     echo "location for job: '${loc}'"

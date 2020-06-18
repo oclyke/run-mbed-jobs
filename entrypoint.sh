@@ -26,6 +26,7 @@ cd ${GITHUB_WORKSPACE}
 
 jobs_out="["
 
+job_count=0
 for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     echo ${row}
@@ -34,22 +35,26 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     loc=$(echo ${row} | base64 --decode | jq -r '.loc')
     cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
 
+    # todo: if name is not specified make name='mbed-compile-job'
+    # todo: if location is not specified make loc='${name}_${job_count}'
+
     echo "name: '${name}'"
     echo "location for job: '${loc}'"
     echo "cmd: '${cmd}'"
 
-    echo "making symbolic link from '${mbed_dir}' to '${GITHUB_WORKSPACE}/${loc}/mbed-os'"
-    rm -rf ${GITHUB_WORKSPACE}/${loc}
-    mkdir -p ${GITHUB_WORKSPACE}/${loc}
-    ln -s ${mbed_dir} ${GITHUB_WORKSPACE}/${loc}/mbed-os
-    cd ${GITHUB_WORKSPACE}/${loc}
+    job_loc=${GITHUB_WORKSPACE}/${loc}
+    echo "making symbolic link from '${mbed_dir}' to '${job_loc}/mbed-os'"
+    rm -rf ${job_loc}
+    mkdir -p ${job_loc}
+    ln -s ${mbed_dir} ${job_loc}/mbed-os
+    cd ${job_loc}
     ls
 
     mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 
     cd ${GITHUB_WORKSPACE}
 
-    jobs_out+='{"name": ${name}, "loc": "${loc}", "cmd": "${cmd}"}, '
+    jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
 
 done
 

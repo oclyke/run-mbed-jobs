@@ -53,6 +53,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${job_loc}
     mbed config root .
     ls
+    ls mbed-os
 
     mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 

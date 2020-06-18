@@ -24,6 +24,8 @@ git checkout ${mbed_branch}
 pip3 install -r requirements.txt
 cd ${GITHUB_WORKSPACE}
 
+jobs_out="["
+
 for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     echo ${row}
@@ -41,12 +43,16 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     ln -s ${mbed_dir} "${loc}/mbed-os"
     cd ${loc}
 
-    mbed ${cmd}
+    mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 
     cd ${GITHUB_WORKSPACE}
 
+    jobs_out+='{"name": ${name}, "loc": "${loc}", "cmd": "${cmd}"}, '
+
 done
 
-touch ./test-output.txt
-echo "this is a test file representing the output" >> ./test-output.txt
-echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
+# touch ./test-output.txt
+# echo "this is a test file representing the output" >> ./test-output.txt
+# echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
+
+echo "::set-output name=jobs::${jobs_out}"

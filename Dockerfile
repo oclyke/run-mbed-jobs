@@ -28,10 +28,9 @@ RUN echo "Installing Packages" && \
   wget \
   curl \
   unzip \
-  python-pip \
-  python-dev \
-  python-setuptools \
-  python-dev \
+  # python-pip \
+  # python-dev \
+  # python-setuptools \
   python3-pip \
   python3-dev \
   python3-setuptools \

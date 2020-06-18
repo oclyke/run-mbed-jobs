@@ -51,6 +51,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     # cp -r ${mbed_dir} ${job_loc}
 
     cd ${job_loc}
+    mbed config root .
     ls
 
     mbed ${cmd} || true # could use this to skip errors on build and continue to build other jobs

@@ -24,7 +24,7 @@ git checkout ${mbed_branch}
 pip3 install -r requirements.txt
 cd ${GITHUB_WORKSPACE}
 
-for row in $(echo ${jobs} | jq -r '.[]'); do
+for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     echo ${row}
 

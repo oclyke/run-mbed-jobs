@@ -54,7 +54,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     mbed config root .
     ls
 
-    mbed ${cmd} || true # could use this to skip errors on build and continue to build other jobs
+    mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 
     cd ${GITHUB_WORKSPACE}
 

@@ -46,7 +46,10 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "making symbolic link from '${mbed_dir}' to '${job_loc}/mbed-os'"
     rm -rf ${job_loc}
     mkdir -p ${job_loc}
-    ln -s ${mbed_dir} ${job_loc}/mbed-os
+    
+    ln -s ${mbed_dir} ${job_loc}
+    # cp -r ${mbed_dir} ${job_loc}
+
     cd ${job_loc}
     ls
 

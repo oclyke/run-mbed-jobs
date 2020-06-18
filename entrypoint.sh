@@ -41,7 +41,9 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     ln -s ${mbed_dir} "${loc}/mbed-os"
     cd ${loc}
 
-    ${cmd}
+    mbed ${cmd}
+
+    cd ${GITHUB_WORKSPACE}
 
 done
 

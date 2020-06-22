@@ -58,6 +58,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${GITHUB_WORKSPACE}
 
     # jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
+    job_count+=1
 
 done
 

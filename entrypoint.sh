@@ -61,7 +61,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     echo "job_count before: ${job_count}"
     # # jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
-    ((job_count++))
+    job_count=$((job_count + 1))
 
     echo "job_count after: ${job_count}"
 

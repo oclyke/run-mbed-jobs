@@ -65,8 +65,12 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${GITHUB_WORKSPACE}
 
     job_info=$(jq -n -r -c --arg job_name "$name" --arg job_loc "$loc" --arg job_cmd "$cmd" '{"name": $job_name, "loc": $job_loc, "cmd": $job_cmd}')
-    jobs_out="${jobs_out}${job_info}, "
-    echo ${jobs_out}
+    
+    if [ "${job_count}" -ne "0" ]; then
+        job_info=", ${job_info}"
+    fi
+    
+    jobs_out="${jobs_out}${job_info}"
     
     job_count=$((job_count + 1))
 done
@@ -76,5 +80,7 @@ done
 # echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
 
 jobs_out="${jobs_out}]"
+
+echo ${jobs_out}
 
 echo "::set-output name=jobs::${jobs_out}"

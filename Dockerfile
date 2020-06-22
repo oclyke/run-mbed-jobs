@@ -50,21 +50,21 @@ RUN echo "Installed packages: " >> ${BUILD_INFO} && \
   pip3 --version >> ${BUILD_INFO} && \
   echo "" >> ${BUILD_INFO}
 
-# Install ARM Embedded Toolchain
-ADD ${ARMGCC_URL} /tmp/
-RUN echo "Installing ARM Cross Compiler" && \
-  tar -xvjf /tmp/${ARMGCC_DWNLD_MATCH} -C /bin/ && \
-  rm -rf /tmp/* && \
-  echo ""
+# # Install ARM Embedded Toolchain
+# ADD ${ARMGCC_URL} /tmp/
+# RUN echo "Installing ARM Cross Compiler" && \
+#   tar -xvjf /tmp/${ARMGCC_DWNLD_MATCH} -C /bin/ && \
+#   rm -rf /tmp/* && \
+#   echo ""
 
-ENV PATH="${ARMGCC_PATH}:${PATH}"
+# ENV PATH="${ARMGCC_PATH}:${PATH}"
 
-# Install mbed-cli
-RUN echo "Installing mbed-cli" && \
-  pip3 install mbed-cli && \
-  echo "mbed-cli $(mbed --version)" >> ${BUILD_INFO}
+# # Install mbed-cli
+# RUN echo "Installing mbed-cli" && \
+#   pip3 install mbed-cli && \
+#   echo "mbed-cli $(mbed --version)" >> ${BUILD_INFO}
 
-ENV MBED_GCC_ARM_PATH="${ARMGCC_PATH}"
+# ENV MBED_GCC_ARM_PATH="${ARMGCC_PATH}"
 
 
 # Set up entry point for github action

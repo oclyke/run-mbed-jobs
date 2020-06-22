@@ -47,13 +47,13 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "\tloc: '${loc}'"
     echo "\tcmd: '${cmd}'"
 
-    # job_loc=${GITHUB_WORKSPACE}/${loc}
-    # rm -rf ${job_loc}
-    # mkdir -p ${job_loc}
+    loc=${GITHUB_WORKSPACE}/${loc}
+    # rm -rf ${loc}
+    # mkdir -p ${loc}
 
-    # cd ${job_loc}
+    # cd ${loc}
     
-    # echo "making symbolic link from '${mbed_dir}' to '${job_loc}'"
+    # echo "making symbolic link from '${mbed_dir}' to '${loc}'"
     # ln -s ${mbed_dir}
 
     # mbed config root .
@@ -64,8 +64,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     cd ${GITHUB_WORKSPACE}
 
-
-    jobs_out="${jobs_out}{\"name\": ${name}, \"loc\": \"${job_loc}\", \"cmd\": \"${cmd}\"}, "
+    job_info=$(jq -n -r -c --arg job_name $name --arg job_loc $loc --arg job_cmd $cmd '{"name": ${job_name}, "loc": ${job_loc}, "cmd": ${job_cmd}}, '
+    jobs_out="${jobs_out}${job_info}"
     echo ${jobs_out}
     
     job_count=$((job_count + 1))

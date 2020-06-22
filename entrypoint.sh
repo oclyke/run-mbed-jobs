@@ -34,8 +34,14 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     loc=$(echo ${row} | base64 --decode | jq -r '.loc')
     cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
 
-    [ "${name}" = "null" ] && (name="mbed-compile-job" && echo "\tNo name for job [${job_count}] defaulting to '${name}'")
-    [ "${loc}" = "null" ] && (loc="${name}_${job_count}" && echo "\tNo location for '${name}' defaulting to '${loc}'")
+    if [ "${name}" = "null" ]; then 
+        name="mbed-compile-job"
+        echo "\tNo name for job [${job_count}] defaulting to '${name}'"
+    fi
+    if [ "${loc}" = "null" ]; then
+        loc="${name}_${job_count}" 
+        echo "\tNo location for '${name}' defaulting to '${loc}'"
+    fi
 
     echo "\tname: '${name}'"
     echo "\tloc: '${loc}'"
@@ -59,7 +65,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${GITHUB_WORKSPACE}
 
 
-    jobs_out='${jobs_out}{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
+    # jobs_out='${jobs_out}{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
+    jobs_out='${jobs_out}concat ${jobs_count}, '
     
     job_count=$((job_count + 1))
 done

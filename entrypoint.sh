@@ -68,6 +68,6 @@ done
 # echo "this is a test file representing the output" >> ./test-output.txt
 # echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
 
-jobs_out+='${jobs_out}]'
+jobs_out='${jobs_out}]'
 
 echo "::set-output name=jobs::${jobs_out}"

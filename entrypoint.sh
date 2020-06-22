@@ -35,23 +35,20 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     loc=$(echo ${row} | base64 --decode | jq -r '.loc')
     cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
 
-    # todo: if name is not specified make name='mbed-compile-job'
-    # todo: if location is not specified make loc='${name}_${job_count}'
+    [ -z "$name" ] && (name="mbed-compile-job" && echo "No name for job [${job_count}] defaulting to '${name}'")
+    [ -z "$name" ] && (loc="${name}_${job_count}" && echo "No location for '${name}' defaulting to '${loc}'")
 
     echo "name: '${name}'"
     echo "location for job: '${loc}'"
     echo "cmd: '${cmd}'"
 
     job_loc=${GITHUB_WORKSPACE}/${loc}
-    echo "making symbolic link from '${mbed_dir}' to '${job_loc}'"
     rm -rf ${job_loc}
     mkdir -p ${job_loc}
-    
-    # # ln -s ${mbed_dir} ${job_loc}
-    # cp -r ${mbed_dir} ${job_loc}
 
     cd ${job_loc}
     
+    echo "making symbolic link from '${mbed_dir}' to '${job_loc}'"
     ln -s ${mbed_dir}
 
     mbed config root .
@@ -70,5 +67,8 @@ done
 # echo "this is a test file representing the output" >> ./test-output.txt
 # echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
 
-jobs_out+='incomplete]'
+# jobs_out+='incomplete]'
+
+jobs_out="test string for jobs_out"
+
 echo "::set-output name=jobs::${jobs_out}"

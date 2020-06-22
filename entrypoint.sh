@@ -66,7 +66,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
 
     # jobs_out='${jobs_out}{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
-    jobs_out="${jobs_out}concat ${jobs_count}, "
+    jobs_out="${jobs_out}concat ${job_count}, "
     echo ${jobs_out}
     
     job_count=$((job_count + 1))
@@ -76,6 +76,6 @@ done
 # echo "this is a test file representing the output" >> ./test-output.txt
 # echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
 
-jobs_out='${jobs_out}]'
+jobs_out="${jobs_out}]"
 
 echo "::set-output name=jobs::${jobs_out}"

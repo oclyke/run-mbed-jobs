@@ -57,8 +57,12 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     cd ${GITHUB_WORKSPACE}
 
+
+    echo "job_count before: ${job_count}"
     # jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
-    ((job_count++))
+    $((job_count++))
+
+    echo "job_count after: ${job_count}"
 
 done
 

@@ -33,8 +33,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     loc=$(echo ${row} | base64 --decode | jq -r '.loc')
     cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
 
-    [ -z "$name" ] && (name="mbed-compile-job" && echo "No name for job [${job_count}] defaulting to '${name}'")
-    [ -z "$name" ] && (loc="${name}_${job_count}" && echo "No location for '${name}' defaulting to '${loc}'")
+    [ "$name" = "null" ] && (name="mbed-compile-job" && echo "No name for job [${job_count}] defaulting to '${name}'")
+    [ "$loc" = "null" ] && (loc="${name}_${job_count}" && echo "No location for '${name}' defaulting to '${loc}'")
 
     echo "name: '${name}'"
     echo "location for job: '${loc}'"

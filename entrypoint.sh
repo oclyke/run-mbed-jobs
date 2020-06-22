@@ -59,20 +59,15 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${GITHUB_WORKSPACE}
 
 
-    echo "job_count before: ${job_count}"
-    # # jobs_out+='{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
+    jobs_out+='${jobs_out}{"name": ${name}, "loc": "${job_loc}", "cmd": "${cmd}"}, '
+    
     job_count=$((job_count + 1))
-
-    echo "job_count after: ${job_count}"
-
 done
 
 # touch ./test-output.txt
 # echo "this is a test file representing the output" >> ./test-output.txt
 # echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
 
-# jobs_out+='incomplete]'
-
-jobs_out="test string for jobs_out"
+jobs_out+='${jobs_out}]'
 
 echo "::set-output name=jobs::${jobs_out}"

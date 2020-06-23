@@ -71,10 +71,12 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     # ls mbed-os
 
     cmd="${base}"
-    if [ "${tgt}" -ne "null" ]; then 
+    if [ ! -z "${tgt}" ]; then 
+        echo "a target was provided"
         cmd="${cmd} -m ${tgt}"
     fi
-    if [ "${tool}" -ne "null" ]; then 
+    if [ ! -z "${tool}" ]; then 
+        echo "a tool was provided"
         cmd="${cmd} -t ${tool}"
     fi
     echo "mbed ${cmd}"

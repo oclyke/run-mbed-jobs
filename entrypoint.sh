@@ -77,12 +77,5 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     job_count=$((job_count + 1))
 done
 
-# touch ./test-output.txt
-# echo "this is a test file representing the output" >> ./test-output.txt
-# echo "::set-output name=jobs::{\"name\": \"test\", \"output\": \"./test-output.txt\"}"
-
 jobs_out="${jobs_out}]"
-
-echo ${jobs_out}
-
 echo "::set-output name=jobs::${jobs_out}"

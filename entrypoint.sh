@@ -30,9 +30,9 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo ""
     echo "${job_count}:"
 
-    name=$(echo ${row} | base64 --decode | jq -r '.name')
-    loc=$(echo ${row} | base64 --decode | jq -r '.loc')
-    cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
+    name=$(echo ${row} | base64 --decode | jq -r -c '.name')
+    loc=$(echo ${row} | base64 --decode | jq -r -c '.loc')
+    cmd=$(echo ${row} | base64 --decode | jq -r -c '.cmd')
     args=$(echo ${row} | base64 --decode | jq -r -c '.args')
 
     if [ "${name}" = "null" ]; then 

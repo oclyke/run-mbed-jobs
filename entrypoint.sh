@@ -32,8 +32,13 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     name=$(echo ${row} | base64 --decode | jq -r -c '.name')
     loc=$(echo ${row} | base64 --decode | jq -r -c '.loc')
-    cmd=$(echo ${row} | base64 --decode | jq -r -c '.cmd')
-    args=$(echo ${row} | base64 --decode | jq -r -c '.args')
+    config=$(echo ${row} | base64 --decode | jq -r -c '.config')
+    user=$(echo ${row} | base64 --decode | jq -r -c '.user')
+
+    tgt=$(echo ${config} | jq -r -c '.tgt')
+    tool=$(echo ${config} | jq -r -c '.tool')
+    cmd=$(echo ${config} | jq -r -c '.cmd')
+    
 
     if [ "${name}" = "null" ]; then 
         name="mbed-compile-job"
@@ -46,8 +51,11 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     echo "\tname: '${name}'"
     echo "\tloc: '${loc}'"
-    echo "\tcmd: '${cmd}'"
-    echo "\targs: '${args}'"
+    echo "\tconfig: '${config}'"
+    echo "\t\ttgt: '$tgt'"
+    echo "\t\ttool: '$tool'"
+    echo "\t\tcmd: '$cmd'"
+    echo "\tuser: '${user}'"
 
     loc=${GITHUB_WORKSPACE}/${loc}
     # rm -rf ${loc}
@@ -67,7 +75,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     cd ${GITHUB_WORKSPACE}
 
     # job_info=$(jq -n -r -c --arg job_name "$name" --arg job_loc "$loc" --arg job_cmd "$cmd" --arg job_args "$args" '{"name": $job_name, "loc": $job_loc, "cmd": $job_cmd, "args": $job_args}')
-    job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": \"$loc\", \"cmd\": \"$cmd\", \"args\": $args}")
+    job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": \"$loc\", \"config\": $config, \"user\": $user}")
     
     if [ "${job_count}" -ne "0" ]; then
         job_info=", ${job_info}"

@@ -33,7 +33,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     name=$(echo ${row} | base64 --decode | jq -r '.name')
     loc=$(echo ${row} | base64 --decode | jq -r '.loc')
     cmd=$(echo ${row} | base64 --decode | jq -r '.cmd')
-    args=$(echo ${row} | base64 --decode | jq -r '.args')
+    args=$(echo ${row} | base64 --decode | jq -r -c '.args')
 
     if [ "${name}" = "null" ]; then 
         name="mbed-compile-job"

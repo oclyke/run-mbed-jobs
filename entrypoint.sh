@@ -84,11 +84,11 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     # faking it for speed
     echo "mbed ${cmd}"
-    lib_src="${loc}/BUILD/libraries/libmbed-os/${tgt}/${tool}/libmbed-os.a"
+    lib_src="./${loc}/BUILD/libraries/libmbed-os/${tgt}/${tool}/libmbed-os.a"
     mkdir -p $(dirname $lib_src)
     touch $lib_src
     echo "this is stand-in text where the libmbed-os library should be" > $lib_src
-    cat $lib_src
+    echo $(cat $lib_src)
 
     # mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 

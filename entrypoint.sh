@@ -49,6 +49,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
         echo "\tNo location for '${name}' defaulting to '${loc}'"
     fi
 
+    loc="mbed-builds/${loc}"
+
     echo "\tname: '${name}'"
     echo "\tloc: '${loc}'"
     echo "\tconfig: '${config}'"

@@ -66,7 +66,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     cd ${GITHUB_WORKSPACE}
 
-    job_info=$(jq -n -r -c --arg job_name "$name" --arg job_loc "$loc" --arg job_cmd "$cmd" --arg job_args "$args" '{"name": $job_name, "loc": $job_loc, "cmd": $job_cmd, "args": $job_args}')
+    # job_info=$(jq -n -r -c --arg job_name "$name" --arg job_loc "$loc" --arg job_cmd "$cmd" --arg job_args "$args" '{"name": $job_name, "loc": $job_loc, "cmd": $job_cmd, "args": $job_args}')
+    job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": \"$loc\", \"cmd\": \"$cmd\", \"args\": $args}")
     
     if [ "${job_count}" -ne "0" ]; then
         job_info=", ${job_info}"

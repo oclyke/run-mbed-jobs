@@ -37,7 +37,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     tgt=$(echo ${config} | jq -r -c '.tgt')
     tool=$(echo ${config} | jq -r -c '.tool')
-    cmd=$(echo ${config} | jq -r -c '.cmd')
+    base=$(echo ${config} | jq -r -c '.base')
     
 
     if [ "${name}" = "null" ]; then 
@@ -54,7 +54,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "\tconfig: '${config}'"
     echo "\t\ttgt: '$tgt'"
     echo "\t\ttool: '$tool'"
-    echo "\t\tcmd: '$cmd'"
+    echo "\t\textra: '$base'"
     echo "\tuser: '${user}'"
 
     loc=${GITHUB_WORKSPACE}/${loc}
@@ -69,6 +69,15 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     # mbed config root .
     # ls
     # ls mbed-os
+
+    cmd="${base}"
+    if [ "${tgt}" -ne "null" ]; then 
+        cmd="${cmd} -m ${tgt}"
+    fi
+    if [ "${tool}" -ne "null" ]; then 
+        cmd="${cmd} -t ${tool}"
+    fi
+    echo "mbed ${cmd}"
 
     # mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
 

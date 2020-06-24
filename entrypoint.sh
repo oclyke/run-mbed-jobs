@@ -51,21 +51,13 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     loc="mbed-builds/${loc}"
 
-    echo "\tname: '${name}'"
-    echo "\tloc: '${loc}'"
-    echo "\tconfig: '${config}'"
-    echo "\t\ttgt: '$tgt'"
-    echo "\t\ttool: '$tool'"
-    echo "\t\textra: '$base'"
-    echo "\tuser: '${user}'"
-
     loc=${GITHUB_WORKSPACE}/${loc}
     rm -rf ${loc}
     mkdir -p ${loc}
 
     cd ${loc}
     
-    echo "making symbolic link from '${mbed_dir}' to '${loc}'"
+    echo "linking '${mbed_dir}' to '${loc}' symbolically"
     ln -s ${mbed_dir}
 
     mbed config root .
@@ -82,20 +74,8 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
         cmd="${cmd} -t ${tool}"
     fi
 
-    # faking it for speed
-    echo "mbed ${cmd}"
-    lib_src="./${loc}/BUILD/libraries/libmbed-os/${tgt}/${tool}/libmbed-os.a"
-    mkdir -p $(dirname $lib_src)
-    touch $lib_src
-    echo $(date) > $lib_src
-    echo "this is stand-in text where the libmbed-os library should be" > $lib_src
-    echo $(cat $lib_src)
-
-    # mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
-
+    mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
     cd ${GITHUB_WORKSPACE}
-
-    # job_info=$(jq -n -r -c --arg job_name "$name" --arg job_loc "$loc" --arg job_cmd "$cmd" --arg job_args "$args" '{"name": $job_name, "loc": $job_loc, "cmd": $job_cmd, "args": $job_args}')
     job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": \"$loc\", \"config\": $config, \"user\": $user}")
     
     if [ "${job_count}" -ne "0" ]; then

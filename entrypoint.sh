@@ -10,17 +10,17 @@ jobs=$2
 echo "mbed_opts: '${mbed_opts}'"
 echo "jobs: '${jobs}'"
 
-# mbed_url=$(echo ${mbed_opts} | jq -r '.url')
-# mbed_branch=$(echo ${mbed_opts} | jq -r '.branch')
-# mbed_dir=${GITHUB_WORKSPACE}/tmp/mbed-os
-# echo "cloning mbed from repo: '${mbed_url}' into '${mbed_dir}'"
-# mkdir -p ${mbed_dir}
-# git clone ${mbed_url} ${mbed_dir}
-# cd ${mbed_dir}
-# echo "checking out branch: ${mbed_branch}"
-# git checkout ${mbed_branch}
-# pip3 install -r requirements.txt
-# cd ${GITHUB_WORKSPACE}
+mbed_url=$(echo ${mbed_opts} | jq -r '.url')
+mbed_branch=$(echo ${mbed_opts} | jq -r '.branch')
+mbed_dir=${GITHUB_WORKSPACE}/tmp/mbed-os
+echo "cloning mbed from repo: '${mbed_url}' into '${mbed_dir}'"
+mkdir -p ${mbed_dir}
+git clone ${mbed_url} ${mbed_dir}
+cd ${mbed_dir}
+echo "checking out branch: ${mbed_branch}"
+git checkout ${mbed_branch}
+pip3 install -r requirements.txt
+cd ${GITHUB_WORKSPACE}
 
 jobs_out="["
 
@@ -60,17 +60,17 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "\tuser: '${user}'"
 
     loc=${GITHUB_WORKSPACE}/${loc}
-    # rm -rf ${loc}
-    # mkdir -p ${loc}
+    rm -rf ${loc}
+    mkdir -p ${loc}
 
-    # cd ${loc}
+    cd ${loc}
     
-    # echo "making symbolic link from '${mbed_dir}' to '${loc}'"
-    # ln -s ${mbed_dir}
+    echo "making symbolic link from '${mbed_dir}' to '${loc}'"
+    ln -s ${mbed_dir}
 
-    # mbed config root .
-    # ls
-    # ls mbed-os
+    mbed config root .
+    ls
+    ls mbed-os
 
     cmd="${base}"
     if [ ! -z "${tgt}" ]; then 

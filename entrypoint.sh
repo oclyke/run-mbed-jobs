@@ -31,7 +31,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     echo "${job_count}:"
 
     name=$(echo ${row} | base64 --decode | jq -r -c '.name')
-    loc=$(echo ${row} | base64 --decode | jq -r -c '.loc')
+    id=$(echo ${row} | base64 --decode | jq -r -c '.loc')
     config=$(echo ${row} | base64 --decode | jq -r -c '.config')
     user=$(echo ${row} | base64 --decode | jq -r -c '.user')
 
@@ -44,20 +44,19 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
         name="mbed-compile-job"
         echo "\tNo name for job [${job_count}] defaulting to '${name}'"
     fi
-    if [ "${loc}" = "null" ]; then
-        loc="${name}_${job_count}" 
-        echo "\tNo location for '${name}' defaulting to '${loc}'"
+    if [ "${id}" = "null" ]; then
+        id="${name}_${job_count}" 
+        echo "\tNo location for '${name}' defaulting to '${id}'"
     fi
 
-    loc="mbed-builds/${loc}"
+    build_root="mbed-builds/${id}"
 
-    # loc=${GITHUB_WORKSPACE}/${loc}
-    rm -rf ${loc}
-    mkdir -p ${loc}
+    rm -rf ${build_root}
+    mkdir -p ${build_root}
 
-    cd ${loc}
+    cd ${build_root}
     
-    echo "linking '${mbed_dir}' to '${loc}' symbolically"
+    echo "linking '${mbed_dir}' to '${build_root}' symbolically"
     ln -s ${mbed_dir}
 
     mbed config root .
@@ -76,6 +75,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
     cd ${GITHUB_WORKSPACE}
+    loc=$(jq -n -r -c "{\"id\": \"$id\", \"root\": \"$build_root\"}")
     job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": \"$loc\", \"config\": $config, \"user\": $user}")
     
     if [ "${job_count}" -ne "0" ]; then

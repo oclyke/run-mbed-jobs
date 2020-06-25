@@ -76,7 +76,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
     cd ${GITHUB_WORKSPACE}
     loc=$(jq -n -r -c "{\"id\": \"$id\", \"root\": \"$build_root\"}")
-    job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": \"$loc\", \"config\": $config, \"user\": $user}")
+    job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": $loc, \"config\": $config, \"user\": $user}")
     
     if [ "${job_count}" -ne "0" ]; then
         job_info=", ${job_info}"

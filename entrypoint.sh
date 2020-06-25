@@ -51,7 +51,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
 
     loc="mbed-builds/${loc}"
 
-    loc=${GITHUB_WORKSPACE}/${loc}
+    # loc=${GITHUB_WORKSPACE}/${loc}
     rm -rf ${loc}
     mkdir -p ${loc}
 

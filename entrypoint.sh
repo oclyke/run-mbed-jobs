@@ -39,7 +39,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     tool=$(echo ${config} | jq -r -c '.tool')
     base=$(echo ${config} | jq -r -c '.base')
     
-
+    cmd="${base}"
     if [ "${name}" = "null" ]; then 
         name="mbed-compile-job"
         echo "\tNo name for job [${job_count}] defaulting to '${name}'"
@@ -48,22 +48,6 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
         id="${name}_${job_count}" 
         echo "\tNo location for '${name}' defaulting to '${id}'"
     fi
-
-    build_root="mbed-builds/${id}"
-
-    rm -rf ${build_root}
-    mkdir -p ${build_root}
-
-    cd ${build_root}
-    
-    echo "linking '${mbed_dir}' to '${build_root}' symbolically"
-    ln -s ${mbed_dir}
-
-    mbed config root .
-    ls
-    ls mbed-os
-
-    cmd="${base}"
     if [ ! -z "${tgt}" ]; then 
         echo "a target was provided"
         cmd="${cmd} -m ${tgt}"
@@ -73,7 +57,16 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
         cmd="${cmd} -t ${tool}"
     fi
 
+    build_root="mbed-builds/${id}"
+    rm -rf ${build_root}
+    mkdir -p ${build_root}
+    cd ${build_root}
+    
+    echo "linking '${mbed_dir}' to '${build_root}' symbolically"
+    ln -s ${mbed_dir}
+    mbed config root .
     mbed ${cmd} # || true # could use this to skip errors on build and continue to build other jobs
+
     cd ${GITHUB_WORKSPACE}
     loc=$(jq -n -r -c "{\"id\": \"$id\", \"root\": \"$build_root\"}")
     job_info=$(jq -n -r -c "{\"name\": \"$name\", \"loc\": $loc, \"config\": $config, \"user\": $user}")

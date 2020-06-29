@@ -7,7 +7,8 @@ inputs:
     description: |
       serialized json array with an object for each job [{"name": "", "loc": "",  "config": {"base": "", "tgt": "", "tool": ""}, "user": {}}, ...]
     required: true
-    default: '{}'
+    default: |
+      {}
   mbed:
     description: |
       serialized json object with mbed git repo information {"url": "", "branch": ""}

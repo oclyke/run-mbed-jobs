@@ -1,5 +1,5 @@
-# compile-mbed-projects
-run any number of custom mbed jobs and use the results in additional actions
+# run-mbed-jobs
+run any number of custom mbed jobs and use the results in subsequent steps
 
 ## inputs
 
@@ -15,7 +15,7 @@ run any number of custom mbed jobs and use the results in additional actions
   * `base`: **required** a string of options to supply to mbed
   * `tgt`: *optional* a target specifier that will be supplied as '-m $tgt'
   * `tgt`: *optional* a toolchain specifier that will be supplied as '-t $tool'
-* `user`: *optional* a user-specified json object that will be copied to the output (useful to pass information required by subsequent actions)
+* `user`: *optional* a user-specified json object that will be copied to the output (useful to pass information required by subsequent steps)
 
 ### `mbed`
 

@@ -38,7 +38,7 @@ a serialized json array of resulting information from each job
 * `config`: the config object that was used for the build
 * `user`: the user's data that has been passed through
 
-## Example usage
+## example usage
 
 This example demonstrates how multiple jobs can be run and the output can be used in subsequent steps. 
 
@@ -102,3 +102,6 @@ jobs:
             mkdir -p $(dirname $dest)
             cp $src $dest
 ```
+
+## notes
+* current version installs a GCC toolchain in the docker container and provides it to mbed - other build tools are not necessarily supported (PRs welcome!)

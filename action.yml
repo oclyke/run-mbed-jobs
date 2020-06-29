@@ -1,7 +1,9 @@
 # action.yml
-name: compile mbed projects
+name: run-mbed-jobs
 author: oclyke-actions
-description: compile mbed projects
+description: run any number of custom mbed jobs and use the results in subsequent steps
+icon: box
+color: yellow
 inputs:
   jobs:
     description: |

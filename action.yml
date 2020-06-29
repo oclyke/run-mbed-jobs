@@ -2,8 +2,9 @@
 name: run-mbed-jobs
 author: oclyke-actions
 description: run any number of custom mbed jobs and use the results in subsequent steps
-icon: box
-color: yellow
+branding:
+  icon: box
+  color: yellow
 inputs:
   jobs:
     description: |

@@ -5,7 +5,8 @@ run any number of custom mbed jobs and use the results in additional actions
 
 ### `jobs`
 
-**required** serialized json array with an object for each job ```[{"name": "", "loc": "", "config": {"base": "", "tgt": "", "tool": ""}, "user": {}}, ...]```
+**required** serialized json array with an object for each job 
+```[{"name": "", "loc": "", "config": {"base": "", "tgt": "", "tool": ""}, "user": {}}, ...]```
 * `name`: *optional* a string used to identify the job, defaults to 'mbed-job'
 * `loc`: *optional* a string to specify the location of the job within the docker container, defaults to '$name_#' where '#' is the serial build id
 * `config`: **required**
@@ -24,7 +25,8 @@ run any number of custom mbed jobs and use the results in additional actions
 
 ### `jobs`
 
-a serialized json array of resulting information from each job ```[{"name": "", "loc": {"id": "", "root": ""}, "config": {"base": "", "tgt": "", "tool": ""}, "user": {}}, ...]```
+a serialized json array of resulting information from each job 
+```[{"name": "", "loc": {"id": "", "root": ""}, "config": {"base": "", "tgt": "", "tool": ""}, "user": {}}, ...]```
 * `name`: the name that was used for the build (either user-specified or default)
 * `loc`:
   * `id`: the id used for the build (useful to navigate mbed build directory structure)

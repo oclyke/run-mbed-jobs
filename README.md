@@ -58,7 +58,7 @@ jobs:
 
       - name: build variant libs
         id: buildvariants
-        uses: oclyke-actions/compile-mbed-projects@v0.0.0
+        uses: oclyke-actions/compile-mbed-projects@v1.0.0
         with:
           jobs: |
             [

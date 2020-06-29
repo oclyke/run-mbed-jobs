@@ -19,7 +19,11 @@ run any number of custom mbed jobs and use the results in subsequent steps
 
 ### `mbed`
 
-*optional* serialized json object with mbed git repo information ```{"url": "", "branch": ""}```
+*optional* serialized json object with mbed git repo information 
+
+```{"url": "", "branch": ""}```
+
+
 * `url`: *optional* the url of the git repo to use for mbed, defaults to 'https://github.com/ARMmbed/mbed-os'
 * `branch`: *optional* the branch of the mbed repo from which to run the jobs, defaults to 'master'
 

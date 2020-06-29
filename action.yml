@@ -4,13 +4,16 @@ author: oclyke-actions
 description: compile mbed projects
 inputs:
   jobs:
-    description: serialized json array with entries [{"name":\ "[job-name", "loc":\ "[job-location]", "cmd":\ "[job command]"}, ...]
+    description: |
+      serialized json array with an object for each job [{"name": "", "loc": "",  "config": {"base": "", "tgt": "", "tool": ""}, "user": {}}, ...]
     required: true
     default: '{}'
   mbed:
-    description: the url for the git repo containing the mbed version to use
+    description: |
+      serialized json object with mbed git repo information {"url": "", "branch": ""}
     required: false
-    default: 'https://github.com/ARMmbed/mbed-os'
+    default: |
+      {"url": "https://github.com/ARMmbed/mbed-os", "branch": "master"}
 outputs:
   jobs:
     description: serialized json object with reults of jobs

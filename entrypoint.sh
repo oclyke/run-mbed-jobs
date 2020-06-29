@@ -12,6 +12,15 @@ echo "jobs: '${jobs}'"
 
 mbed_url=$(echo ${mbed_opts} | jq -r '.url')
 mbed_branch=$(echo ${mbed_opts} | jq -r '.branch')
+if [ "${mbed_url}" = "null" ]; then 
+    mbed_url="https://github.com/ARMmbed/mbed-os"
+    echo "\tno mbed repo url specified - defaulting to '$mbed_url'"
+fi
+if [ "${mbed_branch}" = "null" ]; then 
+    mbed_branch="master"
+    echo "\tno branch specified - defaulting to '$mbed_branch'"
+fi
+
 mbed_dir=${GITHUB_WORKSPACE}/tmp/mbed-os
 echo "cloning mbed from repo: '${mbed_url}' into '${mbed_dir}'"
 mkdir -p ${mbed_dir}
@@ -41,7 +50,7 @@ for row in $(echo ${jobs} | jq -r '.[] | @base64'); do
     
     cmd="${base}"
     if [ "${name}" = "null" ]; then 
-        name="mbed-compile-job"
+        name="mbed-job"
         echo "\tNo name for job [${job_count}] defaulting to '${name}'"
     fi
     if [ "${id}" = "null" ]; then

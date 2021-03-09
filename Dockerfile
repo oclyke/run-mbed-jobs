@@ -5,9 +5,9 @@ FROM ubuntu:18.04
 ARG BUILD_INFO=/build-info.txt
 
 # ARMGCC is ADDed from a web url, the file is decompressed + extracted based on a wildcard matching pattern, and the name of the resulting directory must be added to the path
-ARG ARMGCC_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/9-2019q4/gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2
+ARG ARMGCC_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2
 ARG ARMGCC_DWNLD_MATCH=gcc-arm-none-eabi*.tar.bz2
-ARG ARMGCC_VERSION=gcc-arm-none-eabi-9-2019-q4-major
+ARG ARMGCC_VERSION=gcc-arm-none-eabi-10-2020-q4-major
 ARG ARMGCC_PATH="/bin/${ARMGCC_VERSION}/bin"
 
 # Create a build log
